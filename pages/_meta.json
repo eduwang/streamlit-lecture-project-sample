@@ -1,0 +1,12 @@
+{
+  "1_k-means.py": {
+    "title": "K-평균 군집화 알고리즘 체험",
+    "description": "K-평균 군집화(K-means clustering)를 체험할 수 있습니다.\n총 3가지 데이터셋을 제공합니다."
+    ,"creator": "왕효원"
+  },
+  "2_sample.py": {
+    "title": "추가 페이지 예제",
+    "description": "추가 예정인 페이지입니다."
+    ,"creator": "왕효원"
+  }
+}
