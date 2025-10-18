@@ -1,53 +1,53 @@
 {
-  "1_k-means.py": {
+  "01_k-means.py": {
     "title": "인공지능: K-평균 군집화 알고리즘 체험",
     "description": "K-평균 군집화(K-means clustering)를 체험할 수 있습니다.\n총 3가지 데이터셋을 제공합니다.",
     "creator": "왕효원",
     "original_url": "https://ann-sample.streamlit.app/"
   },
-  "2_의자 나열하기.py": {
+  "02_의자 나열하기.py": {
     "title": "수학: 경우의 수-의자 나열하기",
     "description": "의자와 사람 수를 변화시키며 경우의 수가 어떻게 달라지는지 관찰하게 합니다. \n 모든 경우를 시각적으로 확인하고 자동으로 세어지는 기능을 통해 체계적인 세기 방법의 필요성을 인식하게 합니다. \n 자리 고정 기능이 탑재되어 있습니다!",
     "creator": "A대학-A학생(예비교사)",
     "original_url": "https://12341004.streamlit.app/"
   },
-    "3_함수 그래프 그리기.py": {
+    "03_함수 그래프 그리기.py": {
     "title": "수학: 함수 그래프 그리기",
     "description": "수업시간 중 주어진 함수를 손으로 먼저 그려본 후 앱틀 활용해 함수를 그려보도록 하는 기능을 제공합니다.",
     "creator": "A대학-B학생(예비교사)",
     "original_url": "https://jooanng.streamlit.app/"
   },
-    "4_방정식 저울.py": {
+    "04_방정식 저울.py": {
     "title": "수학: 방정식 저울",
     "description": "학생들이 등식의 성질을 시각적이고 조작적으로 탐구하는 경험을 제공합니다.",
     "creator": "A대학-C학생(예비교사)",
     "original_url": "https://20251002.streamlit.app/"
   },
-    "5_뷔퐁의 바늘 시뮬레이션.py": {
+    "05_뷔퐁의 바늘 시뮬레이션.py": {
     "title": "수학: 뷔퐁의 바늘 시뮬레이션",
     "description": "온라인 시뮬레이터와 같은 동적 확률 실험 도구를 활용하여, 학생들이 물리적 현상 속에 숨겨진 수학적 원리를 시각적으로 탐구하는 경험을 제공합니다.",
     "creator": "A대학-D학생(예비교사)",
     "original_url": "https://mw-mathedu-2241007.streamlit.app/"
   },
-  "6_순열과 조합 경우의 수 계산기.py": {
+  "06_순열과 조합 경우의 수 계산기.py": {
     "title": "수학: 순열과 조합 경우의 수 계산기",
     "description": "학생들이 n과 r이 변화함에 따라 순열과 조합의 경우의 수가 어떻게 나누어지는지 시각적으로 확인할 수 있는 기능을 제공합니다.",
     "creator": "A대학-E학생(예비교사)",
     "original_url": "https://edutech2week.streamlit.app/"
   },
-  "7_연립방정식 암호풀기": {
+  "07_연립방정식 암호풀기.py": {
     "title": "수학: 연립방정식 암호풀기",
     "description": "연립일차방정식을 해결해야만 풀리는 흥미로운 암호 미션을 제공하여, 문제를 게임처럼 해결하면서 방정식이 단순한 계산 도구가 아니라 실생활의 여러 문제를 해결하는 유용한 수단임을 인식하게 합니다.",
     "creator": "A대학-F학생(예비교사)",
     "original_url": "https://202051002.streamlit.app/"
   },
-  "8_ε-δ 시각화.py":{
+  "08_ε-δ 시각화.py":{
     "title": "수학: ε-δ 시각화",
     "description": "수학에서 자주 사용하는 주요 함수들의 그래프 개형과, 코시의 연속 정의(ε-δ)를 시각적으로 탐구할 수 있는 기능을 제공합니다.",
     "creator": "A대학-G학생(예비교사)",
     "original_url": "https://251002.streamlit.app/"
   },
-  "9_몬티 홀 문제.py":{
+  "09_몬티 홀 문제.py":{
     "title": "수학: 몬티 홀 문제 시뮬레이션",
     "description": "몬티 홀 문제를 경험할 수 있도록 합니다. 자신의 초기 직관(선택을 유지하는 것과 바꾸는 것의 확률은 같을 것이다)이 틀릴 수 있음을 구체적인 실험을 통해 깨닫게 합니다.",
     "creator": "A대학-H학생(예비교사)",
@@ -58,5 +58,35 @@
     "description": "조건부 확률, 독립사건과 종속사건, 순열 개념을 시뮬레이션을 통해 이해할 수 있도록 합니다.",
     "creator": "A대학-I학생(예비교사)",
     "original_url": "https://blank-app-kbjzdkhzdxd.streamlit.app/"
+  },
+  "11_정적분 시각화.py":{
+    "title": "수학: 정적분 시각화",
+    "description": "정적분의 개념을 시각적으로 탐구할 수 있는 기능을 제공합니다.",
+    "creator": "A대학-J학생(예비교사)",
+    "original_url": "https://myfirst20250925.streamlit.app/"
+  },
+  "12_평등연속성 판별.py":{
+    "title": "수학: 평등연속성 판별",
+    "description": "함수의 평등연속성을 시각적으로 탐구할 수 있는 기능을 제공합니다.",
+    "creator": "A대학-K학생(예비교사)",
+    "original_url": "https://uniform-continuity-checker-app.streamlit.app/"
+  },
+  "13_정비례와 반비례 그래프 연습.py":{
+    "title": "수학: 정비례와 반비례 그래프 연습",
+    "description": "웹 애플리케이션에서 제공하는 그래프를 기능을 통해 정비례, 반비례 관계의 그래프에서 보이는 특징과 계수의 변화에 따른 차이를 시각적으로 탐구하는 경험을 제공합니다.",
+    "creator": "A대학-L학생(예비교사)",
+    "original_url": "https://rhkwp-1.streamlit.app/"
+  },
+  "14_이차식 전개 시각화.py":{
+    "title": "수학: 이차식 전개 시각화",
+    "description": "인수분해 원리를 사각형의 넓이를 이용하여 시각적으로 이해할 수 있도록 합니다.",
+    "creator": "A대학-M학생(예비교사)",
+    "original_url": "https://math-square.streamlit.app/"
+  },
+  "15_수열 학습.py":{
+    "title": "수학: 수열 학습",
+    "description": "등차수열과 등비수열의 개념을 시각적으로 탐구할 수 있는 기능을 제공합니다.",
+    "creator": "A대학-N학생(예비교사)",
+    "original_url": "https://waterheat392781243729218765611968359049177147.streamlit.app/"
   }
 }
