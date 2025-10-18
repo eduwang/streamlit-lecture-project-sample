@@ -9,14 +9,8 @@ st.set_page_config(page_title="Streamlit Lecture Samples", page_icon="🎈", lay
 st.title("🎈 Streamlit 수업용 앱 모음")
 
 st.markdown(
-    "이 저장소는 수업·실습에서 바로 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 프로젝트입니다. 왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 이동하세요."
+    "이 페이지는 수업·실습에서 바로 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 프로젝트입니다. 왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 이동하세요."
 )
-
-with st.sidebar:
-    st.header("네비게이션")
-    st.write("실습 페이지 목록")
-    # 간단한 설명
-    st.info("각 페이지는 수업 예제로 바로 실행 가능합니다. 파일을 수정해보며 학습하세요.")
 
 def discover_pages(pages_dir: Path):
     """pages 디렉터리에서 .py 파일을 찾아 제목(파일명)과 첫 줄 설명을 추출합니다."""
@@ -92,6 +86,11 @@ if pages:
             if creator:
                 st.markdown(f"**제작자:** {creator}")
             st.markdown(f"좌측 사이드 바에서 **{display_name}** 선택")
+            # meta에 원본 URL(original_url)이 있으면 링크로 표시
+            original = meta.get(pg['filename'], {}).get('original_url', '')
+            if original:
+                # 일반 마크다운 링크로 표시
+                st.markdown(f"- 원본 출처: [{original}]({original})")
             st.write("---")
 else:
     st.info("`pages/` 디렉터리에 예제 페이지가 없습니다. `pages/` 폴더에 `.py` 파일을 추가하세요.")

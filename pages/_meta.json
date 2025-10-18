@@ -1,12 +1,32 @@
 {
   "1_k-means.py": {
-    "title": "K-평균 군집화 알고리즘 체험",
+    "title": "인공지능: K-평균 군집화 알고리즘 체험",
     "description": "K-평균 군집화(K-means clustering)를 체험할 수 있습니다.\n총 3가지 데이터셋을 제공합니다."
-    ,"creator": "왕효원"
+    ,"creator": "왕효원",
+    "original_url": "https://ann-sample.streamlit.app/"
   },
-  "2_sample.py": {
-    "title": "추가 페이지 예제",
-    "description": "추가 예정인 페이지입니다."
-    ,"creator": "왕효원"
+  "2_의자 나열하기.py": {
+    "title": "수학: 경우의 수-의자 나열하기",
+    "description": "의자와 사람 수를 변화시키며 경우의 수가 어떻게 달라지는지 관찰하게 합니다. \n 모든 경우를 시각적으로 확인하고 자동으로 세어지는 기능을 통해 체계적인 세기 방법의 필요성을 인식하게 합니다. \n 자리 고정 기능이 탑재되어 있습니다!"
+    ,"creator": "A대학-A학생(예비교사)",
+    "original_url": "https://12341004.streamlit.app/"
+  },
+    "3_함수 그래프 그리기.py": {
+    "title": "수학: 함수 그래프 그리기",
+    "description": "수업시간 중 주어진 함수를 손으로 먼저 그려본 후 앱틀 활용해 함수를 그려보도록 하는 기능을 제공합니다."
+    ,"creator": "A대학-B학생(예비교사)",
+    "original_url": "https://jooanng.streamlit.app/"
+  },
+    "4_방정식 저울.py": {
+    "title": "수학: 방정식 저울",
+    "description": "학생들이 등식의 성질을 시각적이고 조작적으로 탐구하는 경험을 제공합니다."
+    ,"creator": "A대학-C학생(예비교사)",
+    "original_url": "https://20251002.streamlit.app/"
+  },
+    "5_뷔퐁의 바늘 시뮬레이션.py": {
+    "title": "수학: 뷔퐁의 바늘 시뮬레이션",
+    "description": "온라인 시뮬레이터와 같은 동적 확률 실험 도구를 활용하여, 학생들이 물리적 현상 속에 숨겨진 수학적 원리를 시각적으로 탐구하는 경험을 제공합니다."
+    ,"creator": "A대학-D학생(예비교사)",
+    "original_url": "https://mw-mathedu-2241007.streamlit.app/"
   }
 }
