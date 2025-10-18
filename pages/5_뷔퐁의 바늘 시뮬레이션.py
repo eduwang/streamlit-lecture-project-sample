@@ -62,7 +62,7 @@ def plot_needles(needle_coords, needle_length, line_spacing):
     fig, ax = plt.subplots(figsize=(12, 12))
 
     # 한글 폰트 적용
-    font_path = os.path.join(os.path.dirname(__file__), './fonts/NanumGothic-Regular.ttf')
+    font_path = os.path.join(os.path.dirname(__file__), '../fonts/NanumGothic-Regular.ttf')
     font_prop = font_manager.FontProperties(fname=font_path)
 
     # 평행선 그리기
