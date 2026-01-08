@@ -390,22 +390,64 @@ def interactive_mode():
     left_svg = svg_pizza(dL, nL) if shapeL.startswith("원") else svg_chocolate(dL, nL)
     right_svg = svg_pizza(dR, nR) if shapeR.startswith("원") else svg_chocolate(dR, nR)
 
+def interactive_mode():
+    st.header("웹 체험 모드: 디지털 체험으로 직접 만져보세요! 🖐️")
+    st.markdown("투명도 겹치기, 무한 쪼개기, 분수 저울, 남은 조각 반전 등 디지털 전용 체험을 해보세요. 도형을 드래그해서 겹쳐보세요.")
+
+    dL, nL = fraction_inputs(prefix="IL_", initial_d=4, initial_n=1)
+    shapeL = st.selectbox("왼쪽 모양", ("원(피자)", "사각형(초콜릿)"), key="I_shapeL")
+    dR, nR = fraction_inputs(prefix="IR_", initial_d=6, initial_n=1)
+    shapeR = st.selectbox("오른쪽 모양", ("원(피자)", "사각형(초콜릿)"), key="I_shapeR")
+
+    left_svg = svg_pizza(dL, nL, dark_mode=dark_mode) if shapeL.startswith("원") else svg_chocolate(dL, nL, dark_mode=dark_mode)
+    right_svg = svg_pizza(dR, nR, dark_mode=dark_mode) if shapeR.startswith("원") else svg_chocolate(dR, nR, dark_mode=dark_mode)
+
     opL = st.slider("왼쪽 투명도", 0.0, 1.0, 0.9, 0.05, key="I_opL")
     opR = st.slider("오른쪽 투명도", 0.0, 1.0, 0.6, 0.05, key="I_opR")
 
     # Build an interactive HTML area with JS to handle drag, split, invert, scale
-    html = ("""
+    # 다크 모드 색상 정의
+    if dark_mode:
+        playground_bg = "#2a2a2a"
+        stage_border = "#505050"
+        control_btn_bg = "#5a5a5a"
+        control_btn_text = "#e0e0e0"
+        info_text = "#e0e0e0"
+        scale_wrap_light = "linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%)"
+        scale_wrap_left_shadow = "0 6px 14px rgba(255,100,100,0.15)"
+        scale_wrap_right_shadow = "0 6px 14px rgba(100,200,255,0.15)"
+        scale_text_color = "#c0c0c0"
+        scale_explain_color = "#a0a0a0"
+        beam_color = "#a0a0a0"
+        beam_light_color = "#ff8888"
+        beam_dark_color = "#8888ff"
+    else:
+        playground_bg = "#FFF8F2"
+        stage_border = "#F0D9C3"
+        control_btn_bg = "#FFD699"
+        control_btn_text = "#333"
+        info_text = "#333"
+        scale_wrap_light = "linear-gradient(180deg, #FFF6F6 0%, #FFF1F0 100%)"
+        scale_wrap_left_shadow = "0 6px 14px rgba(255,170,160,0.15)"
+        scale_wrap_right_shadow = "0 6px 14px rgba(160,210,255,0.15)"
+        scale_text_color = "#5D4037"
+        scale_explain_color = "#6B4F3F"
+        beam_color = "#8E7A66"
+        beam_light_color = "#FFB3A7"
+        beam_dark_color = "#B3E5FF"
+
+    html = (f"""
     <style>
-    .playground { background:#FFF8F2; border-radius:12px; padding:12px; }
-    .stage { position:relative; width:100%%; height:420px; border:2px dashed #F0D9C3; border-radius:8px; overflow:hidden; }
-    .piece { position:absolute; cursor:grab; user-select:none; }
-    .controls { margin-top:8px; }
-    .control-btn { background:#FFD699; border:none; padding:8px 12px; margin-right:8px; border-radius:8px; cursor:pointer; }
-    .info { margin-top:8px; font-weight:600; }
-    .scale-wrap { position:absolute; right:12px; top:8px; width:320px; height:200px; background:#fff; border-radius:8px; padding:8px; box-shadow:0 2px 6px rgba(0,0,0,0.08); transition: background 0.35s ease, box-shadow 0.35s ease; }
-    #beam { transition: transform 0.5s ease, fill 0.35s ease; }
-    .scale-wrap.left { background: linear-gradient(180deg, #FFF6F6 0%, #FFF1F0 100%); box-shadow:0 6px 14px rgba(255,170,160,0.15); }
-    .scale-wrap.right { background: linear-gradient(180deg, #F4FBFF 0%, #EAF7FF 100%); box-shadow:0 6px 14px rgba(160,210,255,0.15); }
+    .playground {{ background:{playground_bg}; border-radius:12px; padding:12px; }}
+    .stage {{ position:relative; width:100%; height:420px; border:2px dashed {stage_border}; border-radius:8px; overflow:hidden; }}
+    .piece {{ position:absolute; cursor:grab; user-select:none; }}
+    .controls {{ margin-top:8px; }}
+    .control-btn {{ background:{control_btn_bg}; color:{control_btn_text}; border:none; padding:8px 12px; margin-right:8px; border-radius:8px; cursor:pointer; }}
+    .info {{ margin-top:8px; font-weight:600; color:{info_text}; }}
+    .scale-wrap {{ position:absolute; right:12px; top:8px; width:320px; height:200px; background:#fff; border-radius:8px; padding:8px; box-shadow:0 2px 6px rgba(0,0,0,0.08); transition: background 0.35s ease, box-shadow 0.35s ease; }}
+    #beam {{ transition: transform 0.5s ease, fill 0.35s ease; }}
+    .scale-wrap.left {{ background: {scale_wrap_light}; box-shadow:{scale_wrap_left_shadow}; }}
+    .scale-wrap.right {{ background: {scale_wrap_light}; box-shadow:{scale_wrap_right_shadow}; }}
     </style> 
 
     <div class="playground">
@@ -417,37 +459,39 @@ def interactive_mode():
         <button id="invertBtn" class="control-btn">남은 조각 보기 ↔</button>
       </div>
       <div id="stage" class="stage">
-        <div id="leftPiece" class="piece" data-d="__DL__" data-n="__NL__" data-orig-d="__DORIGL__" data-orig-n="__NORIGL__" data-split-count="0" data-shape="__SHAPEL__" style="left:60px; top:40px; opacity:__OPL__; z-index:3">__LEFT_SVG__</div>
-        <div id="rightPiece" class="piece" data-d="__DR__" data-n="__NR__" data-orig-d="__DORIGR__" data-orig-n="__NORIGR__" data-split-count="0" data-shape="__SHAPER__" style="left:220px; top:140px; opacity:__OPR__; z-index:2">__RIGHT_SVG__</div>
+        <div id="leftPiece" class="piece" data-d="{dL}" data-n="{nL}" data-orig-d="{dL}" data-orig-n="{nL}" data-split-count="0" data-shape="{shapeL}" style="left:60px; top:40px; opacity:{opL}; z-index:3">{left_svg}</div>
+        <div id="rightPiece" class="piece" data-d="{dR}" data-n="{nR}" data-orig-d="{dR}" data-orig-n="{nR}" data-split-count="0" data-shape="{shapeR}" style="left:220px; top:140px; opacity:{opR}; z-index:2">{right_svg}</div>
         <div class="scale-wrap" id="scaleWrap">
           <svg id="scaleSVG" viewBox="0 0 320 200" width="320" height="200" xmlns="http://www.w3.org/2000/svg">
             <line x1="160" y1="100" x2="160" y2="108" stroke="#3F2A20" stroke-width="6" />
-            <rect id="beam" x="40" y="86" width="240" height="12" rx="6" fill="#8E7A66" transform-origin="160px 94px" />
+            <rect id="beam" x="40" y="86" width="240" height="12" rx="6" fill="{beam_color}" transform-origin="160px 94px" />
             <circle cx="160" cy="108" r="8" fill="#3F2A20" />
-            <text id="scaleText" x="160" y="28" fill="#5D4037" font-size="14" text-anchor="middle" font-weight="700">분수 저울</text>
+            <text id="scaleText" x="160" y="28" fill="{scale_text_color}" font-size="14" text-anchor="middle" font-weight="700">분수 저울</text>
           </svg>
-          <div id="scaleValues" style="text-align:center; font-size:13px; color:#5D4037; margin-top:6px;"></div>
-          <div id="scaleExplain" style="font-size:12px; color:#6B4F3F; margin-top:6px;">저울은 색칠된 부분(분수)이 큰 쪽으로 기울어요 — 빔이 거의 수평이면 두 분수가 거의 같아요.</div>
+          <div id="scaleValues" style="text-align:center; font-size:13px; color:{scale_text_color}; margin-top:6px;"></div>
+          <div id="scaleExplain" style="font-size:12px; color:{scale_explain_color}; margin-top:6px;">저울은 색칠된 부분(분수)이 큰 쪽으로 기울어요 — 빔이 거의 수평이면 두 분수가 거의 같아요.</div>
         </div> 
       </div>
       <div class="info">남은 조각: <span id="remaining">-</span></div>
     </div>
 
     <script>
-    (function(){
+    (function(){{
       // helpers
-      function $(s, root=document){return root.querySelector(s)}
-      function $all(s, root=document){return Array.from(root.querySelectorAll(s))}
+      function $(s, root=document){{return root.querySelector(s)}}
+      function $all(s, root=document){{return Array.from(root.querySelectorAll(s))}}
 
       const left = $('#leftPiece');
       const right = $('#rightPiece');
       const stage = $('#stage');
       const remaining = $('#remaining');
+      const beamLightColor = '{beam_light_color}';
+      const beamDarkColor = '{beam_dark_color}';
 
       // make elements draggable
-      function makeDraggable(el){
+      function makeDraggable(el){{
         let isDown=false, startX=0, startY=0, origX=0, origY=0;
-        el.addEventListener('pointerdown', (e)=>{
+        el.addEventListener('pointerdown', (e)=>{{
           isDown=true; el.setPointerCapture(e.pointerId);
           startX = e.clientX; startY = e.clientY;
           const rect = el.getBoundingClientRect();
@@ -455,8 +499,8 @@ def interactive_mode():
           origX = rect.left - srect.left; origY = rect.top - srect.top;
           el.style.cursor='grabbing';
           el.style.zIndex = 999;
-        });
-        window.addEventListener('pointermove', (e)=>{
+        }});
+        window.addEventListener('pointermove', (e)=>{{
           if(!isDown) return;
           const srect = stage.getBoundingClientRect();
           let nx = origX + (e.clientX - startX);
@@ -465,19 +509,19 @@ def interactive_mode():
           ny = Math.max(0, Math.min(srect.height - el.offsetHeight, ny));
           el.style.left = nx + 'px';
           el.style.top = ny + 'px';
-        });
-        window.addEventListener('pointerup', ()=>{ if(isDown){ isDown=false; el.style.cursor='grab'; el.style.zIndex=''; }});
-      }
+        }});
+        window.addEventListener('pointerup', ()=>{{ if(isDown){{ isDown=false; el.style.cursor='grab'; el.style.zIndex=''; }}}});
+      }}
       makeDraggable(left); makeDraggable(right);
 
       // reset position
-      $('#resetBtn').addEventListener('click', ()=>{
+      $('#resetBtn').addEventListener('click', ()=>{{
         left.style.left='60px'; left.style.top='40px'; left.style.zIndex=3;
         right.style.left='220px'; right.style.top='140px'; right.style.zIndex=2;
-      });
+      }});
 
       // compute remaining and update scale
-      function updateStatus(){
+      function updateStatus(){{
         const dL = parseInt(left.dataset.d,10); const nL = parseInt(left.dataset.n,10);
         const dR = parseInt(right.dataset.d,10); const nR = parseInt(right.dataset.n,10);
         remaining.innerText = (dL - nL) + '/' + dL + ' , ' + (dR - nR) + '/' + dR;
@@ -492,26 +536,26 @@ def interactive_mode():
         // color / highlight based on which side is heavier
         const wrap = $('#scaleWrap');
         const explain = $('#scaleExplain');
-        if(Math.abs(valL - valR) < 1e-9){
-          beam.style.fill = '#8E7A66';
-          if(wrap){ wrap.classList.remove('left'); wrap.classList.remove('right'); }
+        if(Math.abs(valL - valR) < 1e-9){{
+          beam.style.fill = '{beam_color}';
+          if(wrap){{ wrap.classList.remove('left'); wrap.classList.remove('right'); }}
           if(explain) explain.innerText = '두 분수는 거의 같습니다! 빔이 수평이에요.';
-        } else if(valL > valR){
-          beam.style.fill = '#FFB3A7';
-          if(wrap){ wrap.classList.add('left'); wrap.classList.remove('right'); }
+        }} else if(valL > valR){{
+          beam.style.fill = beamLightColor;
+          if(wrap){{ wrap.classList.add('left'); wrap.classList.remove('right'); }}
           if(explain) explain.innerText = '왼쪽이 더 큽니다 — 저울이 왼쪽으로 기울어요.';
-        } else {
-          beam.style.fill = '#B3E5FF';
-          if(wrap){ wrap.classList.add('right'); wrap.classList.remove('left'); }
+        }} else {{
+          beam.style.fill = beamDarkColor;
+          if(wrap){{ wrap.classList.add('right'); wrap.classList.remove('left'); }}
           if(explain) explain.innerText = '오른쪽이 더 큽니다 — 저울이 오른쪽으로 기울어요.';
-        }
-      }
+        }}
+      }}
       updateStatus();
 
       // infinite split: doubles visible cut-lines (keeps fills)
-      $('#splitBtn').addEventListener('click', ()=>{
-        [$all('.piece')].forEach(()=>{}); // no-op to silence linter
-        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{
+      $('#splitBtn').addEventListener('click', ()=>{{
+        [$all('.piece')].forEach(()=>{{}}); // no-op to silence linter
+        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{{
           const svg = piece.querySelector('svg');
           if(!svg) return;
           // initialize origD if not present
@@ -525,11 +569,11 @@ def interactive_mode():
           const prev = svg.querySelector('.split-lines'); if(prev) prev.remove();
           const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('class','split-lines');
 
-          if(piece.dataset.shape.startsWith('원')){
+          if(piece.dataset.shape.startsWith('원')){{
             // pizza: add lines by new denominator
             const w = svg.viewBox.baseVal.width; const h = svg.viewBox.baseVal.height;
             const cx = w/2, cy = h/2; const r = Math.min(w,h)/2 - 6;
-            for(let i=0;i<newD;i++){
+            for(let i=0;i<newD;i++){{
               const ang = (2*Math.PI/newD)*i - Math.PI/2;
               const x2 = cx + r*Math.cos(ang);
               const y2 = cy + r*Math.sin(ang);
@@ -537,102 +581,99 @@ def interactive_mode():
               line.setAttribute('x1',cx); line.setAttribute('y1',cy); line.setAttribute('x2',x2); line.setAttribute('y2',y2);
               line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0');
               g.appendChild(line);
-            }
-          } else {
+            }}
+          }} else {{
             // chocolate: add midlines
             const w = svg.viewBox.baseVal.width; const h = svg.viewBox.baseVal.height;
             const innerW = w - 20; // approximate inner area
-            for(let i=1;i<newD;i++){
+            for(let i=1;i<newD;i++){{
               const x = 8 + (i)*(innerW/newD);
               const line = document.createElementNS('http://www.w3.org/2000/svg','line');
               line.setAttribute('x1',x); line.setAttribute('y1',8); line.setAttribute('x2',x); line.setAttribute('y2',h-8);
               line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0');
               g.appendChild(line);
-            }
-          }
+            }}
+          }}
           svg.appendChild(g);
           // animate lines in
           const lines = g.querySelectorAll('line');
           lines.forEach((ln,idx)=> setTimeout(()=> ln.setAttribute('stroke-opacity','1'), idx*8));
-        });
+        }});
         updateStatus();
-      });
+      }});
 
       // undo split (한 단계 되돌리기)
-      $('#undoSplitBtn').addEventListener('click', ()=>{
-        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{
+      $('#undoSplitBtn').addEventListener('click', ()=>{{
+        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{{
           const svg = piece.querySelector('svg'); if(!svg) return;
           let splitCount = parseInt(piece.dataset.splitCount || '0',10);
           const origD = parseInt(piece.dataset.origD || piece.dataset.d,10);
-          if(splitCount > 0){
+          if(splitCount > 0){{
             splitCount -= 1; piece.dataset.splitCount = splitCount;
             const newD = origD * Math.pow(2, splitCount);
             piece.dataset.d = newD;
             const prev = svg.querySelector('.split-lines'); if(prev) prev.remove();
-            if(splitCount > 0){
+            if(splitCount > 0){{
               const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('class','split-lines');
-              if(piece.dataset.shape.startsWith('원')){
+              if(piece.dataset.shape.startsWith('원')){{
                 const w = svg.viewBox.baseVal.width; const h = svg.viewBox.baseVal.height; const cx = w/2, cy = h/2; const r = Math.min(w,h)/2 - 6;
-                for(let i=0;i<newD;i++){ const ang = (2*Math.PI/newD)*i - Math.PI/2; const x2 = cx + r*Math.cos(ang); const y2 = cy + r*Math.sin(ang); const line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1',cx); line.setAttribute('y1',cy); line.setAttribute('x2',x2); line.setAttribute('y2',y2); line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0'); g.appendChild(line); }
-              } else {
-                const w = svg.viewBox.baseVal.width; const h = svg.viewBox.baseVal.height; const innerW = w - 20; for(let i=1;i<newD;i++){ const x = 8 + (i)*(innerW/newD); const line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1',x); line.setAttribute('y1',8); line.setAttribute('x2',x); line.setAttribute('y2',h-8); line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0'); g.appendChild(line); }
-              }
+                for(let i=0;i<newD;i++){{ const ang = (2*Math.PI/newD)*i - Math.PI/2; const x2 = cx + r*Math.cos(ang); const y2 = cy + r*Math.sin(ang); const line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1',cx); line.setAttribute('y1',cy); line.setAttribute('x2',x2); line.setAttribute('y2',y2); line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0'); g.appendChild(line); }}
+              }} else {{
+                const w = svg.viewBox.baseVal.width; const h = svg.viewBox.baseVal.height; const innerW = w - 20; for(let i=1;i<newD;i++){{ const x = 8 + (i)*(innerW/newD); const line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1',x); line.setAttribute('y1',8); line.setAttribute('x2',x); line.setAttribute('y2',h-8); line.setAttribute('stroke','#BDBDBD'); line.setAttribute('stroke-width','0.8'); line.setAttribute('stroke-opacity','0'); g.appendChild(line); }}
+              }}
               svg.appendChild(g);
               const lines = g.querySelectorAll('line'); lines.forEach((ln,idx)=> setTimeout(()=> ln.setAttribute('stroke-opacity','1'), idx*6));
-            }
-          }
-        });
+            }}
+          }}
+        }});
         updateStatus();
-      });
+      }});
 
       // reset split to original denominator
-      $('#resetSplitBtn').addEventListener('click', ()=>{
-        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{
+      $('#resetSplitBtn').addEventListener('click', ()=>{{
+        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{{
           const svg = piece.querySelector('svg'); if(!svg) return;
           const origD = parseInt(piece.dataset.origD || piece.dataset.d,10);
           piece.dataset.splitCount = 0;
           piece.dataset.d = origD;
           const prev = svg.querySelector('.split-lines'); if(prev) prev.remove();
-        });
+        }});
         updateStatus();
-      });
+      }});
 
       // invert remaining: swap filled/unfilled on slices/blocks
       let inverted = false;
-      $('#invertBtn').addEventListener('click', ()=>{
+      $('#invertBtn').addEventListener('click', ()=>{{
         inverted = !inverted;
-        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{
+        [$('#leftPiece'), $('#rightPiece')].forEach(piece=>{{
           const svg = piece.querySelector('svg'); if(!svg) return;
-          if(piece.dataset.shape.startsWith('원')){
+          if(piece.dataset.shape.startsWith('원')){{
             const slices = svg.querySelectorAll('.slice');
-            slices.forEach(s=>{
+            slices.forEach(s=>{{
               const filled = s.getAttribute('data-filled') === '1';
-              if(!inverted){ // restore original
-                if(filled){ s.setAttribute('fill','url(#cheeseGrad)'); s.setAttribute('data-filled','1'); }
-                else { s.setAttribute('fill','#FFF5E6'); s.setAttribute('data-filled','0'); }
-              } else {
-                if(filled){ s.setAttribute('fill','#FFF5E6'); s.setAttribute('data-filled','0'); }
-                else { s.setAttribute('fill','url(#cheeseGrad)'); s.setAttribute('data-filled','1'); }
-              }
-            });
-          } else {
+              if(!inverted){{ // restore original
+                if(filled){{ s.setAttribute('fill','url(#cheeseGrad)'); s.setAttribute('data-filled','1'); }}
+                else {{ s.setAttribute('fill','#FFF5E6'); s.setAttribute('data-filled','0'); }}
+              }} else {{
+                if(filled){{ s.setAttribute('fill','#FFF5E6'); s.setAttribute('data-filled','0'); }}
+                else {{ s.setAttribute('fill','url(#cheeseGrad)'); s.setAttribute('data-filled','1'); }}
+              }}
+            }});
+          }} else {{
             const blocks = svg.querySelectorAll('.block');
-            blocks.forEach(b=>{
+            blocks.forEach(b=>{{
               const filled = b.getAttribute('data-filled') === '1';
-              if(!inverted){ if(filled){ b.setAttribute('fill','url(#chocoGrad)'); b.setAttribute('data-filled','1'); } else { b.setAttribute('fill','#EDE0D6'); b.setAttribute('data-filled','0'); }}
-              else { if(filled){ b.setAttribute('fill','#EDE0D6'); b.setAttribute('data-filled','0'); } else { b.setAttribute('fill','url(#chocoGrad)'); b.setAttribute('data-filled','1'); }}
-            });
-          }
-        });
+              if(!inverted){{ if(filled){{ b.setAttribute('fill','url(#chocoGrad)'); b.setAttribute('data-filled','1'); }} else {{ b.setAttribute('fill','#EDE0D6'); b.setAttribute('data-filled','0'); }}}}
+              else {{ if(filled){{ b.setAttribute('fill','#EDE0D6'); b.setAttribute('data-filled','0'); }} else {{ b.setAttribute('fill','url(#chocoGrad)'); b.setAttribute('data-filled','1'); }}}}
+            }});
+          }}
+        }});
         updateStatus();
-      });
+      }});
 
-    })();
+    }})();
     </script>
     """)
-    # Use safe placeholder replacement to avoid issues with '%' inside SVG content
-    html = html.replace('__DL__', str(dL)).replace('__NL__', str(nL)).replace('__DORIGL__', str(dL)).replace('__NORIGL__', str(nL)).replace('__SHAPEL__', shapeL).replace('__OPL__', str(opL)).replace('__LEFT_SVG__', left_svg)
-    html = html.replace('__DR__', str(dR)).replace('__NR__', str(nR)).replace('__DORIGR__', str(dR)).replace('__NORIGR__', str(nR)).replace('__SHAPER__', shapeR).replace('__OPR__', str(opR)).replace('__RIGHT_SVG__', right_svg)
 
     st.components.v1.html(html, height=680)
 

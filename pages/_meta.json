@@ -190,6 +190,18 @@
     "description": "분수 조각을 이용하여 분수의 개념을 시각적으로 이해할 수 있는 기능을 제공합니다.",
     "creator": "C대학-학생A(예비교사)",
     "original_url": "https://blank-app-a69nw4a2uapp.streamlit.app/"
+  },
+    "33_블록으로 배우는 사칙연산.py":{
+    "title": "초등: 블록으로 배우는 사칙연산",
+    "description": "사용자가 조작할 수 있는 블록을 이용하여 사칙연산의 개념을 시각적으로 이해할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생B(예비교사)",
+    "original_url": "https://eun-math-app.streamlit.app/"
+  },
+    "34_등호의 의미 학습.py":{
+    "title": "초등: 등호의 의미 학습",
+    "description": "시소를 활용하여 등호의 의미를 시각적으로 이해할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생C(예비교사)",
+    "original_url": "https://blank-app-c2xv7fekx7p.streamlit.app/"
   }
 
 }
