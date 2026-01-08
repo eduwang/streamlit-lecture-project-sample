@@ -9,7 +9,9 @@ st.set_page_config(page_title="Streamlit Lecture Samples", page_icon="🎈", lay
 st.title("🎈 Streamlit 수업용 앱 모음")
 
 st.markdown(
-    "이 페이지는 수업·실습에서 바로 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 프로젝트입니다. 왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 이동하세요."
+    "이 페이지는 수업·실습에서 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 프로젝트입니다. " \
+    "왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 이동하세요. " \
+    "예시용 페이지로 옮겨오는 과정에서 원본과 조금 다르게 표시될 수 있습니다."
 )
 
 def discover_pages(pages_dir: Path):
