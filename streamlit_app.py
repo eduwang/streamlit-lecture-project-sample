@@ -6,12 +6,21 @@ BASE = Path(__file__).parent
 
 st.set_page_config(page_title="Streamlit Lecture Samples", page_icon="🎈", layout="wide")
 
-st.title("🎈 Streamlit 수업용 앱 모음")
+st.title("🎈 수업용 Streamlit 애플리케이션 예시 모음")
+
+st.markdown("""
+    이 페이지는 수업·실습에서 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 페이지입니다.            
+    Streamlit 애플리케이션을 개발할 때, **아이디어 탐색용**으로 활용하시길 바랍니다.            
+    왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 웹 애플리케이션 원본으로 이동할 수 있습니다.
+    
+    본 페이지에 저장된 각 콘텐츠의 저작권은 **원작자**(콘텐츠마다 기재)에게 있으며, 예시용 페이지로 옮겨오는 과정에서 원본과 조금 다르게 표시될 수 있습니다.
+"""
+    
+)
 
 st.markdown(
-    "이 페이지는 수업·실습에서 사용할 수 있는 Streamlit 예제 페이지들을 모아둔 프로젝트입니다. " \
-    "왼쪽 사이드바에서 페이지를 선택하거나 아래 링크를 통해 이동하세요. " \
-    "예시용 페이지로 옮겨오는 과정에서 원본과 조금 다르게 표시될 수 있습니다."
+    'Made by Hyowon Wang | <a href="https://hyowonwang.netlify.app/" style="text-decoration: none;">🌐</a>',
+    unsafe_allow_html=True
 )
 
 def discover_pages(pages_dir: Path):
@@ -66,7 +75,8 @@ meta_path = BASE / "pages" / "_meta.json"
 meta = load_meta(meta_path)
 
 if pages:
-    st.subheader("페이지 설명")
+    st.subheader("콘텐츠 목록")
+    st.markdown("아래 목록을 확인하신 후, 좌측 사이드 바에서 해당 콘텐츠로 이동하세요.")
     for pg in pages:
         # 메타에서 제목/설명/제작자 가져오기(없으면 기본값)
         title = meta.get(pg['filename'], {}).get('title', pg['filename'])

@@ -202,6 +202,42 @@
     "description": "시소를 활용하여 등호의 의미를 시각적으로 이해할 수 있는 기능을 제공합니다.",
     "creator": "C대학-학생C(예비교사)",
     "original_url": "https://blank-app-c2xv7fekx7p.streamlit.app/"
+  },
+    "35_거리-속력 시뮬레이터.py":{
+    "title": "초등: 거리-속력 시뮬레이터",
+    "description": "여러 캐릭터가 각각 다른 거리/시간으로 달릴 때 속력을 한눈에 비교할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생D(예비교사)",
+    "original_url": "https://dotti-gimal.streamlit.app/"
+  },
+    "36_옷가게와 함께하는 다섯 자리 수 연습.py":{
+    "title": "초등: 옷가게와 함께하는 다섯 자리 수 연습",
+    "description": "옷가게 시나리오를 통해 다섯 자리 수 연습을 할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생E(예비교사)",
+    "original_url": "https://241105kimdyfinal.streamlit.app/"
+  },
+    "37_야구 스카우터-소수의 크기 비교.py":{
+    "title": "초등: 소수의 크기 비교 - 야구 스카우터",
+    "description": "야구 스카우터 맥락을 통해 소수 비교 개념을 학습할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생G(예비교사)",
+    "original_url": "https://cje-241110khw-4.streamlit.app/"
+  },
+    "38_자연수의 혼합계산+땅따먹기 게임.py":{
+    "title": "초등: 자연수의 혼합계산 + 땅따먹기 게임",
+    "description": "자연수의 혼합계산 개념을 학습하고, 땅따먹기 게임을 통해 재미있게 연습할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생H(예비교사)",
+    "original_url": "https://cnue-finaltest-230715.streamlit.app/"
+  },
+    "39_종이띠를 활용해 평균 이해하기.py":{
+    "title": "초등: 종이띠를 활용해 평균 이해하기",
+    "description": "종이띠를 활용하여 평균 개념을 시각적으로 이해할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생I(예비교사)",
+    "original_url": "https://cnue-jeonghyun-240710.streamlit.app/"
+  },
+    "40_블록쌓기로 배우는 부피와 겉넓이.py":{
+    "title": "초등: 블록쌓기로 배우는 부피와 겉넓이",
+    "description": "3차원 블록쌓기를 활용하여 부피와 겉넓이 개념을 시각적으로 이해할 수 있는 기능을 제공합니다.",
+    "creator": "C대학-학생J(예비교사)",
+    "original_url": "https://gdp-dashboard-axgnli48qro.streamlit.app/"
   }
 
 }
